@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <h2>FreahKart Login</h2>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="text" name="uname" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+        <div class="Signup">
+            <p style="margin-left: 10px;">Don't have an account  <a href="signup" class="button" style="text-decoration: none;" >Signup</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
