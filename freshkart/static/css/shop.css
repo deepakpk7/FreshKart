@@ -1,0 +1,114 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+} 
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent background */
+    backdrop-filter: blur(50px); /* Optional: adds a blur effect */
+    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    position: fixed; /* Fixed position */
+    top: 0; /* Stick to the top */
+    width: 100%; /* Full width */
+    z-index: 1000; /* Ensure it stays on top */
+} 
+
+main {
+    padding-top: 60px; /* Space for the fixed navbar */
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+} 
+
+.nav-list {
+    list-style: none; 
+     display: flex;
+}
+
+.nav-list li {
+     margin: 0 15px;
+} 
+ 
+.nav-list a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    transition: color 0.3s ease;
+} 
+
+ .nav-list a:hover {
+    background-color: #ececec;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+} 
+
+ .bar {
+    height: 3px;
+    width: 25px;
+    background-color: white;
+    margin: 3px 0;
+}
+
+ /* Responsive Styles */ 
+ @media (max-width: 768px) {
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0; 
+         background-color: #333;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .menu-toggle:checked + .menu-icon + .nav-list {
+        display: flex;
+    }
+
+    .menu-icon {
+        display: flex;
+    } 
+}
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 16px;
+    margin-top: 30px;
+    height: 1500px;  
+}
+.product-info {
+    margin-bottom: 20px;
+}
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.off-price {
+    color: red;
+    font-size: 1rem;
+    text-decoration: line-through;
+} 
