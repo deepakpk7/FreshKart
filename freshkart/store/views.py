@@ -150,7 +150,55 @@ def details(req):
             data=Product.objects.all()
             return render(req,'shop/details.html',{'data':data})
 
+def edit_product(req,id):
+    if req.method=='POST':
+        pid=req.POST['p_id']
+        name=req.POST['name']
+        descri=req.POST['description']
+        img=req.FILES.get('p_img')
+        if img:
+            Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
+            data=Product.objects.get(pk=id)
+            data.img=img
+            data.save()
+        else:
+            Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
+        return redirect(shop_home)
+    else:
+        data=Product.objects.get(pk=id)      
+        return render(req,'shop/edit.html',{'data':data})
+    
+def editdetails(req,pid):
+    if req.method == 'POST':
+        details=req.POST['d_id']
+        product=req.POST['p_id']
+        weight=req.POST['p_weight']
+        price=req.POST['p_price']
+        offprice=req.POST['of_price']
+        stock=req.POST['p_stock']
+        Details.objects.filter(pk=details).update(product=Product.objects.get(pk=product),weight=weight,price=price,off_price=offprice,stock=stock)
+        return redirect(shop_home)
+    else:      
+        data=Details.objects.filter(product=pid)
+        data1=Product.objects.get(pk=pid)
+        return render(req,'shop/editdetails.html',{'data':data,'data1':data1}) 
+    
+def deletedetails(req,pid):
+     data=Details.objects.get(pk=pid)
+     data.delete()
+     return redirect(shop_home)
 
+def delete_product(req,pid):
+    data=Product.objects.get(pk=pid)
+    file=data.img.url
+    file=file.split('/')[-1]
+    os.remove('media/'+file)
+    data.delete()
+    return redirect(shop_home)
+
+def bookings(req):
+    bookings=Buy.objects.all()[::-1]
+    return render(req,'shop/bookings.html',{'bookings':bookings})
 
 
 
@@ -166,3 +214,17 @@ def user_home(req):
         return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
     else:
          return redirect(gro_login)
+     
+def view_pro(req,pid):
+    if 'user' in req.session:
+        data=Product.objects.get(pk=pid)
+        data1=Details.objects.filter(product=pid)
+        data2=Details.objects.get(product=pid,pk=data1[0].pk)
+        cat=Category.objects.all()
+        if req.GET.get('dis'):
+                dis=req.GET.get('dis')
+                data2=Details.objects.get(product=pid,pk=dis)
+        return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
+    else:
+         return redirect(gro_login)
+

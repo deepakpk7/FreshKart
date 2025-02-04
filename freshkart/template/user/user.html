@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -20,7 +19,7 @@
 
   <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
     <div class="container-fluid">
-      <a class="navbar-brand"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></a>
+      <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -57,9 +56,89 @@
       </div>
     </div>
   </nav> 
-  <div class="image-user">
-    <img src="static/img/img11.png" alt="" width="100%" height="100%">
-  </div>
+  <section style="background-image: url('static/images/banner-1.jpg');background-repeat: no-repeat;background-size: cover;">
+    <div class="container-lg">
+      <div class="row">
+        <div class="col-lg-6 pt-5 mt-5">
+          <h2 class="display-1 ls-1"><span class="fw-bold text-primary">Organic</span> Foods at your <span class="fw-bold">Doorsteps</span></h2>
+          <div class="row my-5">
+            <div class="col">
+              <div class="row text-dark">
+                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">14k+</p></div>
+                <div class="col"><p class="text-uppercase lh-sm mb-0">Product Varieties</p></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row text-dark">
+                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">50k+</p></div>
+                <div class="col"><p class="text-uppercase lh-sm mb-0">Happy Customers</p></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row text-dark">
+                <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">10+</p></div>
+                <div class="col"><p class="text-uppercase lh-sm mb-0">Store Locations</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3 g-0 justify-content-center">
+        <div class="col">
+          <div class="card border-0 bg-primary rounded-0 p-4 text-light">
+            <div class="row">
+              <div class="col-md-3 text-center">
+                <svg width="60" height="60"><use xlink:href="#fresh"></use></svg>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body p-0">
+                  <h5 class="text-light">Fresh from farm</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-0 bg-secondary rounded-0 p-4 text-light">
+            <div class="row">
+              <div class="col-md-3 text-center">
+                <svg width="60" height="60"><use xlink:href="#organic"></use></svg>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body p-0">
+                  <h5 class="text-light">100% Organic</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card border-0 bg-danger rounded-0 p-4 text-light">
+            <div class="row">
+              <div class="col-md-3 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                  <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                </svg>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body p-0">
+                  <h5 class="text-light">Free delivery</h5>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipi elit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </section>
+  <div class="text-center">
+    <h1>Welcome, {{ first_name }}!</h1>
+</div>
 
     <div class="container mb-6 mt-5" >
         <div class="row">
@@ -87,34 +166,7 @@
             
         {% endfor %}
         </div>
-    </div>
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-logo">
-          <img src="{% static 'img/logo-png.png' %}" alt="">
-        </div>
-        <div class="footer-links">
-            <h4>Navigation</h4>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Our Work</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-            </ul>
-        </div>
-        <div class="footer-social">
-            <h4>Follow Us</h4>
-            <ul>
-                <li><i class="fa-brands fa-instagram" style="color: rgb(107, 7, 7); font-size: 20px; "></i></li>
-                <li><i class="fa-brands fa-facebook" style="color: blue; font-size: 20px;"></i></li>
-                <li><i class="fa-brands fa-x-twitter" style="font-size: 20px;"></i></li>
-                <li><i class="fa-brands fa-telegram" style="color: rgb(19, 148, 223); font-size: 20px;"></i></li>
-            </ul>
-        </div>
-    </div>
-    <p>© 2025 My Website. All rights reserved.</p>
-        
+    </div>    
   </footer>
 
 </body>
