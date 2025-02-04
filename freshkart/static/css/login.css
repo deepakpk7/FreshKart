@@ -1,12 +1,11 @@
 body {
-    background-image: url(static/img/grogo.jpeg);
+    background-image: url('../images/banner-1.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(10px);
 }
 .container {
     display: flex;

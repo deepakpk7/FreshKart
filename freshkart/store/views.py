@@ -97,6 +97,58 @@ def shop_home(req):
     else:
         return redirect(gro_login)
 
+def add_product(req):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            pid=req.POST['p_id']
+            name=req.POST['name']
+            descri=req.POST['description']
+            categories=req.POST['p_categories']
+            img=req.FILES['p_img']
+            data=Product.objects.create(pid=pid,name=name,img=img,des=descri,category=Category.objects.get(category=categories))
+            data.save()
+            return redirect(details)
+        else:
+            data=Category.objects.all()        
+            return render(req,'shop/addproduct.html',{'data':data})
+    else:
+        return redirect(gro_login)
+def categoryyy(req):
+    if 'shop' in req.session:
+        if req.method == 'POST':
+            category=req.POST['p_categories']
+            data=Category.objects.create(category=category)
+            data.save()
+            return redirect(categoryyy)
+        else:
+            data=Category.objects.all()
+            return render(req,'shop/category.html',{'data':data})
+    else:
+         return redirect(gro_login)
+    
+def delete_cat(req,id):
+     data=Category.objects.get(pk=id)
+     data.delete()
+     return redirect(categoryyy)
+
+def view_category(req,id):
+    category = Category.objects.get(pk=id)
+    details = Details.objects.filter(product__category=category)
+    return render(req, 'shop/view_category.html', {'category': category,'details': details})
+
+def details(req):
+    if req.method == 'POST':
+            products=req.POST['p_id']
+            weight=req.POST['p_weight']
+            price=req.POST['p_price']
+            offprice=req.POST['of_price']
+            stock=req.POST['p_stock']
+            data=Details.objects.create(weight=weight,price=price,off_price=offprice,stock=stock,product=Product.objects.get(pid=products))
+            data.save()
+            return redirect(shop_home)
+    else:
+            data=Product.objects.all()
+            return render(req,'shop/details.html',{'data':data})
 
 
 
@@ -107,4 +159,10 @@ def shop_home(req):
 # -------------------User--------------
 
 def user_home(req):
-    return render(req,'user/user.html')
+    if 'user' in req.session:
+        product=Product.objects.all()
+        data=Details.objects.all()
+        data1=Category.objects.all()
+        return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
+    else:
+         return redirect(gro_login)

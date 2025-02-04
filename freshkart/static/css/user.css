@@ -38,45 +38,6 @@ body {
     margin-top: 100px;
 }
 
-.dropdown-menu{
-    border: none;
-}
-
-.navbar-nav{
-  font-family: "Lexend Giga", serif;
-  font-optical-sizing: auto;
-  font-weight:600;
-  font-style: normal;
-}
-
-.nav-list a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    padding: 5px 0;
-    position: relative;
-}
-
-.navbar-nav a::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: rgb(0, 0, 0);
-    position: relative;
-    left: 0;
-    bottom: -5px; /* Adjusts the position of the underline */
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.navbar-nav a:hover::after {
-    transform: scaleX(1);
-}
-
-.nav-list a:hover {
-    background-color: #ffffff;
-}
-
 .menu-toggle {
     display: none;
 }
@@ -230,3 +191,98 @@ body {
         align-items: center;
     }
 }
+/* Navbar Background Color */
+.navbar {
+    background-color: #ffffff !important; /* White background */
+    border-bottom: 1px solid #ddd; /* Light grey bottom border */
+  }
+  
+  /* Navbar Brand Image */
+  .navbar-brand img {
+    width: 300px; /* Set the image width */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Navbar Links */
+  .nav-link {
+    color: #333 !important; /* Dark text color */
+    font-weight: 500;
+    font-size: 16px;
+    transition: color 0.3s ease; /* Smooth transition effect on hover */
+  }
+  
+  /* Navbar Links on Hover */
+  .nav-link:hover {
+    color: #007bff !important; /* Blue color on hover */
+    text-decoration: underline; /* Underline effect on hover */
+  }
+  
+  /* Active Navbar Link */
+  .nav-link.active {
+    color: #007bff !important; /* Blue color for active links */
+  }
+  
+  /* Navbar Dropdown Button */
+  .btn.dropdown-toggle {
+    color: #333 !important; /* Set text color */
+    border: 1px solid #ccc; /* Light border around button */
+    padding: 8px 16px; /* Add padding to button */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    background-color: #ffffff; /* White background */
+    border-radius: 4px; /* Rounded corners for the dropdown */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Add shadow */
+  }
+  
+  /* Dropdown Item */
+  .dropdown-item {
+    font-size: 14px;
+    color: #333; /* Text color for dropdown items */
+    padding: 10px 20px;
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+  }
+  
+  /* Hover effect for Dropdown Items */
+  .dropdown-item:hover {
+    background-color: #f1f1f1; /* Light grey background on hover */
+    color: #007bff !important; /* Blue color for hovered item */
+  }
+  
+  /* Navbar Collapse Adjustment for Smaller Screens */
+  .navbar-collapse {
+    justify-content: flex-end; /* Align menu to the right */
+  }
+  
+  .navbar-toggler {
+    border-color: #007bff; /* Border color for the toggler */
+  }
+  
+  .navbar-toggler-icon {
+    background-color: #007bff; /* Toggler icon color */
+  }
+  
+  /* Navbar Cart Icon and Text */
+  .nav-item a {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Customize Cart Icon if needed */
+  .nav-item .cart-icon {
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
+  /* For smaller screen sizes, adjust the navbar */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px 15px; /* Add some padding */
+    }
+  
+    .navbar-brand img {
+      width: 250px; /* Resize logo on smaller screens */
+    }
+  }
+  
