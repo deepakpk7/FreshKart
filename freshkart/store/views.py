@@ -227,4 +227,57 @@ def view_pro(req,pid):
         return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
     else:
          return redirect(gro_login)
+     
+     
+def add_to_cart(req,id):
+    details = Details.objects.get(pk=id)
+    user = User.objects.get(username=req.session['user'])
+    try:
+        cart = Cart.objects.get(details=details, user=user)
+        cart.quantity += 1
+        cart.price=cart.details.off_price*cart.quantity
+        cart.save()
+    except:
+        price=details.off_price
+        data = Cart.objects.create(details=details, user=user, quantity=1,price=price)
+        data.save()
+    return redirect(view_cart)
+
+def view_cart(req):
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user'])
+        data = Cart.objects.filter(user=user)
+        total=0
+        for i in data:
+            total+=i.price*i.quantity
+        cat=Category.objects.all()
+        return render(req, 'user/cart.html', {'cart': data,'cat':cat,'total':total})
+    else:
+         return redirect(gro_login)
+
+def remove_item(req,id):
+    data=Cart.objects.get(pk=id)
+    data.delete()
+    return redirect(view_cart)
+
+def qty_add(req,cid):
+    try:
+        data=Cart.objects.get(pk=cid)
+        if data.details.stock > data.quantity:
+            data.quantity+=1
+            data.save()
+        else:
+            messages.warning(req, "Cannot increase quantity. Stock unavailable.")
+    except Cart.DoesNotExist:
+        messages.error(req, "Cart item not found.")
+    return redirect(view_cart)
+
+def qty_sub(req,cid):
+    data=Cart.objects.get(pk=cid)
+    data.quantity-=1
+    data.save()
+    if data.quantity==0:
+        data.delete()
+    return redirect(view_cart)
+
 

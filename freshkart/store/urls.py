@@ -21,5 +21,11 @@ urlpatterns = [
     
     # ---------------User----------
     path('user_home',views.user_home),
+    path('add_to_cart/<id>',views.add_to_cart),
+    path('cart',views.view_cart),
+    path('remove_item/<id>',views.remove_item),
+    path('qty_add/<cid>',views.qty_add),
+    path('qty_sub/<cid>',views.qty_sub),
+    
     
 ]
