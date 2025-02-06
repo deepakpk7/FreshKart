@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+    <nav class="navbar navbar-expand-sm bg-white navbar-white fixed-top ">
         <div class="container-fluid">
           <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -46,8 +46,8 @@
       </nav> 
 
     
-    <div class="container my-5">
-        <div class="card shadow-lg p-4">
+    <div class="container mt-5" style="margin-top: 30px;">
+        <div class="card shadow-lg p-5">
             <h1 class="text-center mb-4">Add Product</h1>
             <form action="#" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
