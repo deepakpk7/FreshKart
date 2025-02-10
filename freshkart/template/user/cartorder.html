@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/cartorder.css' %}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+
+<body>
+
+    <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+        <div class="container-fluid">
+          <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link  active text-dark" href="#">Home</a>
+              </li>
+              <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in data1 %}
+                        <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li> 
+              <li class="nav-item ">
+                <a class="nav-link text-dark " href="cart">Cart</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="user_book">Order Bookings</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="Address">Add Address</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="logout">Logout</a>
+              </li>      
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+
+    <!-- <nav class="navbar fixed-top  ">
+        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="../../user_home">Home</a></li>
+            <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in cat %}
+                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li> -->
+            <!-- <li><a href="../address">Add Address</a></li> -->
+            <!-- <li><a href="../../cart">Cart</a></li>
+            <li><a href="../../user_book">Order Placed</a></li>
+            <li><a href="../../logout">Logout</a></li>
+
+
+        </ul>
+    </nav> -->
+    <!-- <div class="order-summary">
+        <h2>Order Summary</h2>
+
+        <div>
+            <label for="product">Shipping Address</label>
+            <a href="../address"><button class="btn btn-outline-dark">Add Address</button></a>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <select id="address" name="address" required>
+                    {% for j in data %}
+                    <option value="{{j}}">
+                        {{j.name}},{{j.address}},{{j.street}},{{j.city}},{{j.state}},{{j.pincode}},{{j.phone}}</option>
+                    {% endfor %}
+                </select>
+                <a href="../../../address">Add new address + </a>
+        </div>
+        <div class="product">
+            <img src="{{prod.product.img.url}}" alt="Product Name" class="product-img">
+            <div class="product-details">
+                <h3 class="product-name">{{prod.product.name}}</h3>
+                <p class="product-description">{{prod.product.descri}}</p>
+                <p class="product-category">Category: {{prod.product.category.category}}</p>
+                <p class="product-category">{{prod.weight}}ml</p>
+                <p class="product-price">Price: <span class="original-price">₹{{prod.price}}</span></p>
+                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
+                <button type="submit" class="payment-button">Proceed </button>
+            </div>
+            </form>
+        </div>
+
+    </div> -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="card p-4 shadow">
+                    <h2 class="text-center mb-3">Order Summary</h2>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <label class="form-label">Customer Address:</label>
+                        <select name="address" id="address" class="form-select mb-3">
+                            {% for i in data %}
+                                <option value="{{i.pk}}">{{i.name}}, {{i.phone}}, {{i.address}}, {{i.street}}, {{i.pin}}, {{i.state}}</option>
+                            {% endfor %}
+                        </select>
+                        <a href="../../../address" class="btn btn-link">Add new address +</a>
+
+                        <h3 class="mt-3">Payment Method:</h3>
+                        <div class="form-check">
+                            <input type="radio" name="payable" id="paynow" value="paynow" class="form-check-input" required>
+                            <label class="form-check-label" for="paynow">PayNow</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" name="payable" id="cod" value="cod" class="form-check-input" required>
+                            <label class="form-check-label" for="cod">Cash On Delivery</label>
+                        </div>
+                        
+                        {% for i in data2 %}
+                        <div class="row mt-4 border-bottom pb-3">
+                            <div class="col-md-3 col-sm-4 col-6 text-center">
+                                <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-img img-fluid">
+                            </div>
+                            <div class="col-md-9 col-sm-8 col-6">
+                                <h5 class="product-name">{{i.details.product.name}}</h5>
+                                <p class="product-description">{{i.details.product.descri}}</p>
+                                <p class="product-description">Quantity: {{i.quantity}}</p>
+                                <p class="product-category">Category: {{i.details.product.category.category}}</p>
+                                <p class="product-price">Price: <span class="original-price">₹{{i.details.price}}</span></p>
+                                <p class="offer-price">Offer Price: <span class="text-danger">₹{{i.details.off_price}}</span></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <h3 class="mt-4 text-primary">Total: ₹{{price}}</h3>
+                        <h3 class="text-success">Amount Payable: ₹{{total}}</h3>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Proceed</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

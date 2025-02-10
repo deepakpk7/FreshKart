@@ -304,6 +304,30 @@ def buyNow(req,pid):
                 return render(req,"user/address.html")
     else:
         return redirect(gro_login) 
+    
+def orderSummary(req,prod,data):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=prod)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method == 'POST':
+            address=req.POST['address']
+            pay=req.POST['pay']
+            addr=Address.objects.get(user=user,pk=address)
+            print(pay)
+        else:
+            cat=Category.objects.all()
+            return render(req,'user/order.html',{'prod':prod,'data':data,'cat':cat})
+        print(prod.pk)
+        req.session['address']=addr.pk
+        req.session['detail']=prod.pk
+        if pay == 'paynow':
+            return redirect("payment")    
+        else:
+            return redirect("buy_pro")  
+    else:
+        return redirect(gro_login)
+
 
 def address(req):
     if 'user' in req.session:
@@ -366,3 +390,87 @@ def carbuy(req):
                 return render(req,"user/address.html")
     else:
         return redirect(gro_login) 
+    
+def orderSummary2(req,price,total):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        carts=Cart.objects.filter(user=user)# return render(req,'user/orderSummary2.html',{'cart':cart,'data':data,'discount':discount,'price':price,'total':total})
+        if req.method == 'POST':
+            address=req.POST['address']
+            pay1=req.POST['payable']
+            addr=Address.objects.get(user=user,pk=address)
+        else:
+            cat=Category.objects.all()
+            return render(req,'user/cartorder.html',{'data2':carts,'data':data,'price':price,'total':total,'cat':cat})
+        req.session['address']=addr.pk
+        # req.session['detail']=carts.pk
+        if pay1 == 'paynow':
+            return redirect("payment2")    
+        else:
+            return redirect(book2)    
+    else:
+        return redirect(gro_login)
+
+def payment2(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        cat=Category.objects.all()
+        price=0
+        for i in cart:
+            price+=(i.details.off_price)*i.quantity
+        total=price
+        user = User.objects.get(username=req.session['user'])
+        name = user.first_name
+        amount = total
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create(
+            {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
+        )
+        order_id=razorpay_order['id']
+        order = Order.objects.create(
+            name=name, amount=amount, provider_order_id=order_id
+        )
+        order.save()
+        return render(
+            req,
+            "user/payment2.html",
+            {
+                "callback_url": "http://127.0.0.1:8000/callback2",
+                "razorpay_key": settings.RAZORPAY_KEY_ID,
+                "order": order,
+            },
+        )
+    else:
+        return redirect(gro_login) 
+def book2(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        price=0
+        for i in cart:
+            price=i.price*i.quantity
+            data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
+            data.save()
+        cart.delete()
+        return redirect(user_bookings)
+    else:
+        return redirect(gro_login)
+    
+def user_bookings(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        bookings=Buy.objects.filter(user=user)[::-1]
+        cat=Category.objects.all()
+        return render(req,'user/user_bookings.html',{'bookings':bookings,'cat':cat})
+    else:
+         return redirect(gro_login)
+     
+def deleteBookings(req,pid):
+    if 'user' in req.session:
+        data=Buy.objects.get(pk=pid)
+        data.delete()
+        return redirect(user_bookings)
+    else:
+        return redirect(gro_login)

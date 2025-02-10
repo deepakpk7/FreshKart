@@ -15,31 +15,45 @@
     
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-        <div class="container">
-            <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="../../user_home">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Categories</a>
-                        <ul class="dropdown-menu">
-                            {% for i in cat %}
-                            <li><a class="dropdown-item" href="../../view_cat/{{i.pk}}">{{i.category}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="../../cart">Cart</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../user_book">Order Bookings</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../Address">Add Address</a></li>
-                    <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+        <div class="container-fluid">
+          <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link  active text-dark" href="#">Home</a>
+              </li>
+              <li>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
+                        Categories
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for i in data1 %}
+                        <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </li> 
+              <li class="nav-item ">
+                <a class="nav-link text-dark " href="cart">Cart</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="user_book">Order Bookings</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="Address">Add Address</a>
+              </li>
+              <li class="nav-item  ">
+                <a class="nav-link text-dark" href="logout">Logout</a>
+              </li>      
+            </ul>
+          </div>
         </div>
-    </nav>
+    </nav> 
     
 
     <div class="container mt-5 pt-5">
@@ -55,7 +69,9 @@
                         <p class="card-text">{{i.details.product.descri}}</p>
                         <p class="text-muted">Category: {{i.details.product.category.category}}</p>
                         <p>Weight: {{i.details.weight}}</p>
-                        <p>Price: <del class="text-danger">₹{{i.details.price}}</del> <strong class="text-success">₹{{i.details.off_price}}</strong></p>
+                        <p>Price: <del class="text-danger">₹{{i.details.price}}</del> 
+                           <strong class="text-success">₹{{i.details.off_price}}</strong>
+                        </p>
                         <p>
                             <a href="qty_sub/{{i.id}}" class="btn btn-outline-secondary">-</a>
                             Qty: {{i.quantity}}
@@ -66,6 +82,7 @@
             </div>
             {% endfor %}
         </div>
+    
         {% if messages %}
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -73,7 +90,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
-    {% endif %}
+        {% endif %}
+    
         <div class="row my-4">
             <div class="col-md-6">
                 <h3>Total Amount: ₹{{total}}</h3>
@@ -82,8 +100,17 @@
                 <a class="btn btn-primary" href="buycart">CHECKOUT CART</a>
             </div>
         </div>
+    
+        {% else %}
+        <!-- Empty Cart Message -->
+        <div class="col-12 text-center mt-5">
+            <h1>Your cart is empty. Add some items to your cart!</h1>
+            <a href="../user_home" class="btn btn-primary mt-3">Go to Home</a>
+        </div>
         {% endif %}
     </div>
+    
+    <!-- Toast Messages -->
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             {% if messages %}
