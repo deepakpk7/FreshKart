@@ -239,7 +239,7 @@ def add_to_cart(req,id):
         cart.save()
     except:
         price=details.off_price
-        data = Cart.objects.create(details=details, user=user, quantity=1,price=price)
+        data = Cart.objects.create(details=details,user=user,quantity=1,price=price)
         data.save()
     return redirect(view_cart)
 
@@ -280,4 +280,89 @@ def qty_sub(req,cid):
         data.delete()
     return redirect(view_cart)
 
+def buyNow(req,pid):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=pid)
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if data:
+            return redirect("orderSummary",prod=prod.pk,data=data)
+        else:
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                address=req.POST['address']
+                street=req.POST['street']
+                city=req.POST['city']
+                state=req.POST['state']
+                pin=req.POST['pin']
+                phone=req.POST['phone']
+                data=Address.objects.create(user=user,name=name,address=address,street=street,city=city,state=state,pincode=pin,phone=phone)
+                data.save()
+                return redirect("orderSummary",prod=prod.pk,data=data)
+            else:
+                return render(req,"user/address.html")
+    else:
+        return redirect(gro_login) 
 
+def address(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        data=Address.objects.filter(user=user)
+        if req.method=='POST':
+            user=User.objects.get(username=req.session['user'])
+            name=req.POST['name']
+            phn=req.POST['phone']
+            house=req.POST['address']
+            street=req.POST['street']
+            city=req.POST['city']
+            pin=req.POST['pin']
+            state=req.POST['state']
+            data=Address.objects.create(user=user,name=name,phone=phn,address=house,city=city,street=street,pincode=pin,state=state)
+            data.save()
+            return redirect(address)
+        else:
+            return render(req,"user/address.html",{'data':data})
+    else:
+        return redirect(gro_login) 
+    
+def delete_address(req,pid):
+    if 'user' in req.session:
+        data=Address.objects.get(pk=pid)
+        data.delete()
+        return redirect(address)
+    else:
+        return redirect(gro_login)
+    
+
+def carbuy(req):
+    if 'user' in req.session:
+        user=User.objects.get(username=req.session['user'])
+        cart=Cart.objects.filter(user=user)
+        price=0
+        total=0
+        for i in cart:
+            price+=(i.details.price)*i.quantity
+            price=price
+            total+=(i.details.off_price)*i.quantity
+            total=total
+        data=Address.objects.filter(user=user)
+        if data:
+            return redirect("orderSummary2",price=price,total=total)
+        else:
+            if req.method=='POST':
+                user=User.objects.get(username=req.session['user'])
+                name=req.POST['name']
+                phn=req.POST['phone']
+                house=req.POST['address']
+                street=req.POST['street']
+                city=req.POST['city']
+                pin=req.POST['pin']
+                state=req.POST['state']
+                data=Address.objects.create(user=user,name=name,phone=phn,address=house,city=city,street=street,pincode=pin,state=state)
+                data.save()
+                return redirect("orderSummary2",price=price,total=total)
+            else:
+                return render(req,"user/address.html")
+    else:
+        return redirect(gro_login) 

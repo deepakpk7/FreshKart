@@ -26,6 +26,9 @@ urlpatterns = [
     path('remove_item/<id>',views.remove_item),
     path('qty_add/<cid>',views.qty_add),
     path('qty_sub/<cid>',views.qty_sub),
+    path('buynow/<pid>',views.buyNow),
+    path('address',views.address),
+    path('buycart',views.carbuy),
     
     
 ]
