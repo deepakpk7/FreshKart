@@ -134,7 +134,7 @@ def delete_cat(req,id):
 def view_category(req,id):
     category = Category.objects.get(pk=id)
     details = Details.objects.filter(product__category=category)
-    return render(req, 'shop/view_category.html', {'category': category,'details': details})
+    return render(req, 'user/view_cat.html', {'category': category,'details': details})
 
 def details(req):
     if req.method == 'POST':
@@ -162,7 +162,7 @@ def edit_product(req,id):
             data.img=img
             data.save()
         else:
-            Product.objects.filter(pk=id).update(pid=pid,name=name,descri=descri)
+            Product.objects.filter(pk=id).update(pid=pid,name=name,des=descri)
         return redirect(shop_home)
     else:
         data=Product.objects.get(pk=id)      

@@ -16,7 +16,6 @@
 
 <body style="background-image: url(static/img/grogo.jpeg); backdrop-filter: blur(10px);">
 
-
   <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
     <div class="container-fluid">
       <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
@@ -82,8 +81,7 @@
             </div>
           </div>
         </div>
-      </div>
-      
+      </div> 
       <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3 g-0 justify-content-center">
         <div class="col">
           <div class="card border-0 bg-success rounded-0 p-4 text-light">
@@ -133,42 +131,35 @@
           </div>
         </div>
       </div>
-    
     </div>
   </section>
   <div class="text-center">
     <h1>Welcome, <span style="text-transform: uppercase ;">{{user.first_name}}</span></h1>
-</div>
-
-    <div class="container mb-6 mt-5" >
-        <div class="row">
-        {% for i in products %}
-                <div class="col-lg-4 mb-4">
-                    <a href="viewpro/{{i.pk}}" style="text-decoration: none; color: black;" >
-                    <div class="card" style="width:400px">
-                        <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="width:100%"
-                            height="350px">
-                        <div class="card-body">
-                            <h4 class="card-title">{{i.name}}</h4>
-                            <p class="card-text">{{i.descri}}</p>
-                            <p>{{i.category.category}}</p>
-                            <!-- {% for j in data %}
-                            {% if j.product == i %}
-                            <h5>{{j.weight}}ml&G</h5>
-                            <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
-                            <h4>₹{{j.off_price}}</h4>
-                            {% endif %}
-                            {% endfor %} -->
-                        </div>
-                    </a>
-                    </div>
-                </div>
-            
-        {% endfor %}
-        </div>
-    </div>    
-  </footer>
-
+  </div>
+  <div class="container mb-6 mt-5" >
+    <div class="row">
+      {% for i in products %}
+      <div class="col-lg-4 mb-4">
+        <a href="viewpro/{{i.pk}}" style="text-decoration: none; color: black;" >
+        <div class="card" style="width:400px">
+          <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="width:100%"height="350px">
+          <div class="card-body">
+            <h4 class="card-title">{{i.name}}</h4>
+            <p class="card-text">{{i.descri}}</p>
+            <p>{{i.category.category}}</p>
+            <!-- {% for j in data %}
+            {% if j.product == i %}
+            <h5>{{j.weight}}ml&G</h5>
+            <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
+            <h4>₹{{j.off_price}}</h4>
+            {% endif %}
+            {% endfor %} -->
+          </div>
+            </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </body>
 
 </html>
