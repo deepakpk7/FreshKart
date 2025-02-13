@@ -13,6 +13,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 
+
 # Create your views here.
 
 def gro_login(req):
@@ -227,8 +228,7 @@ def view_pro(req,pid):
         return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
     else:
          return redirect(gro_login)
-     
-     
+    
 def add_to_cart(req,id):
     details = Details.objects.get(pk=id)
     user = User.objects.get(username=req.session['user'])
