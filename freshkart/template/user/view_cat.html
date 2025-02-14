@@ -33,8 +33,8 @@
                     Categories
                 </button>
                 <ul class="dropdown-menu">
-                    {% for i in data1 %}
-                    <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                  {% for i in data1 %}
+                    <li><a class="dropdown-item " href="view_cat/{{ i.pk }}">{{i.category}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
