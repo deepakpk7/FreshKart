@@ -135,7 +135,8 @@ def delete_cat(req,id):
 def view_category(req,id):
     category = Category.objects.get(pk=id)
     details = Details.objects.filter(product__category=category)
-    return render(req, 'user/view_cat.html', {'category': category,'details': details})
+    data1=Category.objects.all()
+    return render(req, 'user/view_cat.html', {'category': category,'details': details,'data1':data1})
 
 def details(req):
     if req.method == 'POST':
@@ -208,13 +209,13 @@ def bookings(req):
 # -------------------User--------------
 
 def user_home(req):
-    if 'user' in req.session:
+    # if 'user' in req.session:
         product=Product.objects.all()
         data=Details.objects.all()
         data1=Category.objects.all()
         return render(req,'user/user.html',{'products':product,'data':data,'data1':data1})
-    else:
-         return redirect(gro_login)
+    # else:
+    #      return redirect(gro_login)
      
 def view_pro(req,pid):
     if 'user' in req.session:
