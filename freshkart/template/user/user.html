@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title></title>
+    
 </head>
 
 <body style="background-image: url(static/img/grogo.jpeg); backdrop-filter: blur(10px);">
@@ -57,6 +58,7 @@
       </div>
     </div>
   </nav> 
+  
   <section style="background-image: url('static/images/banner-1.jpg');background-repeat: no-repeat;background-size: cover;">
     <div class="container-lg">
       <div class="row">
@@ -135,37 +137,38 @@
       </div>
     </div>
   </section>
-  <div class="text-center">
+  <div class="container">
     <h1>Welcome, <span style="text-transform: uppercase ;">{{user.first_name}}</span></h1>
   </div>
-  <div class="container mb-6 mt-5" >
-    <div class="row">
-      {% for i in products %}
-      <div class="col-lg-4 mb-4">
-        <a href="viewpro/{{i.pk}}" style="text-decoration: none; color: black;" >
-        <div class="card" style="width:400px">
-          <img class="card-img-top" src="{{i.img.url}}" alt="Card image" style="width:100%"height="350px">
-          <div class="card-body">
-            <h4 class="card-title">{{i.name}}</h4>
-            <p class="card-text">{{i.descri}}</p>
-            <p>{{i.category.category}}</p>
-            <!-- {% for j in data %}
-            {% if j.product == i %}
-            <h5>{{j.weight}}ml&G</h5>
-            <h5 style="text-decoration: line-through;">₹{{j.price}}</h5>
-            <h4>₹{{j.off_price}}</h4>
-            {% endif %}
-            {% endfor %} -->
-          </div>
+  <section id="instagram" class="padding-large overflow-hidden no-padding-top">
+    <div class="container">
+      <div class="row">
+        <div class="display-header text-uppercase text-dark text-center pb-3">
+          <h2 class="display-7">Shop Our Products</h2>
+        </div>
+        <div class="d-flex flex-wrap">
+          {% for i in products %}
+          <figure class="instagram-item pe-2">
+            <a href="viewpro/{{i.pk}}" class="image-link position-relative">
+              <img src="{{i.img.url}}" alt="instagram" class="insta-image">
+              <!-- <div class="icon-overlay position-absolute d-flex">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+                </svg>
+              </div> -->
             </a>
+          </figure>
+          {% endfor %}
+        </div>
+        
       </div>
     </div>
-    {% endfor %}
-  </div>
-
+  </section>
+  
   <footer class="text-center py-3 bg-light mt-5">
     <p>&copy; 2025 Your Company. All Rights Reserved.</p>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
   
 </body>
 
