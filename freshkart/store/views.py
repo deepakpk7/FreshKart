@@ -86,7 +86,7 @@ def validate(req,name,password,email,otp):
 def gro_logout(req):
     logout(req)
     req.session.flush()
-    return redirect(gro_login)
+    return redirect(user_home)
 
 # ----------------Admin-----------------
 
@@ -218,7 +218,7 @@ def user_home(req):
     #      return redirect(gro_login)
      
 def view_pro(req,pid):
-    if 'user' in req.session:
+    # if 'user' in req.session:
         data=Product.objects.get(pk=pid)
         data1=Details.objects.filter(product=pid)
         data2=Details.objects.get(product=pid,pk=data1[0].pk)
@@ -227,22 +227,25 @@ def view_pro(req,pid):
                 dis=req.GET.get('dis')
                 data2=Details.objects.get(product=pid,pk=dis)
         return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
-    else:
-         return redirect(gro_login)
+    # else:
+    #      return redirect(gro_login)
     
 def add_to_cart(req,id):
-    details = Details.objects.get(pk=id)
-    user = User.objects.get(username=req.session['user'])
-    try:
-        cart = Cart.objects.get(details=details, user=user)
-        cart.quantity += 1
-        cart.price=cart.details.off_price*cart.quantity
-        cart.save()
-    except:
-        price=details.off_price
-        data = Cart.objects.create(details=details,user=user,quantity=1,price=price)
-        data.save()
-    return redirect(view_cart)
+    if 'user' in req.session:
+        details = Details.objects.get(pk=id)
+        user = User.objects.get(username=req.session['user'])
+        try:
+            cart = Cart.objects.get(details=details, user=user)
+            cart.quantity += 1
+            cart.price=cart.details.off_price*cart.quantity
+            cart.save()
+        except:
+            price=details.off_price
+            data = Cart.objects.create(details=details,user=user,quantity=1,price=price)
+            data.save()
+        return redirect(view_cart)
+    else:
+         return redirect(gro_login)
 
 def view_cart(req):
     if 'user' in req.session:
