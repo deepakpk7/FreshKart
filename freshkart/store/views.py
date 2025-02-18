@@ -416,6 +416,69 @@ def orderSummary2(req,price,total):
     else:
         return redirect(gro_login)
 
+def order_payment(req):
+    if 'user' in req.session:
+        user = User.objects.get(username=req.session['user'])
+        name = user.first_name
+        data=Details.objects.get(pk=req.session['detail'])
+        amount = data.off_price
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        razorpay_order = client.order.create(
+            {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
+        )
+        order_id=razorpay_order['id']
+        order = Order.objects.create(
+            name=name, amount=amount, provider_order_id=order_id
+        )
+        order.save()
+        return render(
+            req,
+            "user/payment.html",
+            {
+                "callback_url": "http://127.0.0.1:8000/callback",
+                "razorpay_key": settings.RAZORPAY_KEY_ID,
+                "order": order,
+            },
+        )
+    else:
+        return render(gro_login)
+
+@csrf_exempt
+def callback(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  
+ 
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return redirect("buy_pro")
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})  
+
+
 def payment2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -448,6 +511,40 @@ def payment2(req):
         )
     else:
         return redirect(gro_login) 
+    
+def callback2(request):
+    def verify_signature(response_data):
+        client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        return client.utility.verify_payment_signature(response_data)
+
+    if "razorpay_signature" in request.POST:
+        payment_id = request.POST.get("razorpay_payment_id", "")
+        provider_order_id = request.POST.get("razorpay_order_id", "")
+        signature_id = request.POST.get("razorpay_signature", "")
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.signature_id = signature_id
+        order.save()
+        if not verify_signature(request.POST):
+            order.status = PaymentStatus.SUCCESS
+            order.save()
+            return render(request, "callback.html", context={"status": order.status})  
+        else:
+            order.status = PaymentStatus.FAILURE
+            order.save()
+            return redirect("book2")
+
+    else:
+        payment_id = json.loads(request.POST.get("error[metadata]")).get("payment_id")
+        provider_order_id = json.loads(request.POST.get("error[metadata]")).get(
+            "order_id"
+        )
+        order = Order.objects.get(provider_order_id=provider_order_id)
+        order.payment_id = payment_id
+        order.status = PaymentStatus.FAILURE
+        order.save()
+        return render(request, "callback.html", context={"status": order.status})      
+
 def book2(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -478,3 +575,17 @@ def deleteBookings(req,pid):
         return redirect(user_bookings)
     else:
         return redirect(gro_login)
+
+def buy_product(req):
+    if 'user' in req.session:
+        prod=Details.objects.get(pk=req.session['detail'])
+        user=User.objects.get(username=req.session['user'])
+        quantity=1
+        price=prod.off_price
+        buy=Buy.objects.create(details=prod,user=user,quantity=quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
+        buy.save()
+        prod.stock-=1
+        prod.save()
+        return redirect(user_bookings)
+    else:
+         return redirect(gro_login)
