@@ -128,8 +128,8 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-RAZORPAY_KEY_ID = 'rzp_test_aSaMOLmp1IqtHq'
-RAZORPAY_KEY_SECRET = 'haSLsc4y4NaBBaUU2SvWoKvb'
+RAZORPAY_KEY_ID = 'rzp_test_7kLSrp0RSHD2zZ'
+RAZORPAY_KEY_SECRET = 'QWaDWrQ2aS0dXognKbMq4pdX'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
