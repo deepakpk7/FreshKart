@@ -28,6 +28,7 @@ urlpatterns = [
     path('qty_sub/<cid>',views.qty_sub),
     path('buynow/<pid>',views.buyNow),
     path('address',views.address),
+    path('update_username',views.update_username),
     path('buycart',views.carbuy),
     path('orderSummary/<prod>/<data>',views.orderSummary,name="orderSummary"),
     path('orderSummary2/<price>/<total>',views.orderSummary2,name="orderSummary2"),

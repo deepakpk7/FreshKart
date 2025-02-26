@@ -333,6 +333,8 @@ def orderSummary(req,prod,data):
         return redirect(gro_login)
 
 
+
+
 def address(req):
     if 'user' in req.session:
         user=User.objects.get(username=req.session['user'])
@@ -353,7 +355,28 @@ def address(req):
             return render(req,"user/address.html",{'data':data})
     else:
         return redirect(gro_login) 
-    
+
+def update_username(req):
+    if req.method == "POST":
+        new_first_name = req.POST.get("name")
+        new_username = req.POST.get("username")
+
+        
+        if User.objects.filter(username=new_username).exclude(id=req.user.id).exists():
+            messages.error(req, "This username is already taken. Please choose another one.")
+            return redirect(address) 
+
+        
+        if new_first_name and new_username:
+            req.user.first_name = new_first_name
+            req.user.username = new_username
+            req.user.save()
+            messages.success(req, "Username updated successfully!")
+        else:
+            messages.error(req, "Username and Name cannot be empty.")
+    return redirect(address)
+
+
 def delete_address(req,pid):
     if 'user' in req.session:
         data=Address.objects.get(pk=pid)
