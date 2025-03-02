@@ -27,6 +27,39 @@ figure.instagram-item img.insta-image {
 .instagram-item .icon-overlay svg.instagram {
   height: 10px;
 }
+/* Hover effect for image */
+.image-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Overlay effect */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Show overlay on hover */
+/* .image-link:hover .overlay {
+  opacity: 1;
+} */
+
+/* Product card hover effect */
+/* .card {
+  transition: transform 0.3s ease-in-out;
+} */
+
+/* .card:hover {
+  transform: scale(1.05);
+} */
 
 @media only screen and (max-width: 767px) {
 #instagram figure.instagram-item {

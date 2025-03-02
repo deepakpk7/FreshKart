@@ -51,7 +51,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     {% for i in data1 %}
-                    <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                    <li><a class="dropdown-item " href="view_cat/{{ i.pk }}">{{i.category}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -63,11 +63,13 @@
             <a class="nav-link text-dark" href="user_book">Order Bookings</a>
           </li>
           <li class="nav-item  ">
-            <a class="nav-link text-dark" href="Address">Add Address</a>
+            <a class="nav-link text-dark" href="../Address">Profile</a>
           </li>
-          <li class="nav-item  ">
-            <a class="nav-link text-dark" href="logout">Logout</a>
-          </li>      
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+          {% endif %}     
         </ul>
       </div>
     </div>

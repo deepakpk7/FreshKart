@@ -15,7 +15,7 @@
     
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+    <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
         <div class="container-fluid">
           <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -33,7 +33,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         {% for i in data1 %}
-                        <li><a class="dropdown-item " href="view_cat/{{i.pk }}">{{i.category}}</a></li>
+                        <li><a class="dropdown-item " href="view_cat/{{ i.pk }}">{{i.category}}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -45,72 +45,75 @@
                 <a class="nav-link text-dark" href="user_book">Order Bookings</a>
               </li>
               <li class="nav-item  ">
-                <a class="nav-link text-dark" href="Address">Add Address</a>
+                <a class="nav-link text-dark" href="../Address">Profile</a>
               </li>
-              <li class="nav-item  ">
-                <a class="nav-link text-dark" href="logout">Logout</a>
-              </li>      
+              {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+              {% else %}
+                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+              {% endif %}     
             </ul>
           </div>
         </div>
-    </nav> 
+    </nav>  
     
-
-    <div class="container mt-5 pt-5">
-        <h1 class="text-center my-4">Your Cart</h1>
-        {% if cart %}
+    <div class="container my-5">
         <div class="row">
-            {% for i in cart %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card shadow-sm">
-                    <img src="{{i.details.product.img.url}}" class="card-img-top" alt="Product Image">
-                    <div class="card-body">
-                        <h5 class="card-title">{{i.details.product.name}}</h5>
-                        <p class="card-text">{{i.details.product.descri}}</p>
-                        <p class="text-muted">Category: {{i.details.product.category.category}}</p>
-                        <p>Weight: {{i.details.weight}}</p>
-                        <p>Price: <del class="text-danger">₹{{i.details.price}}</del> 
-                           <strong class="text-success">₹{{i.details.off_price}}</strong>
-                        </p>
+            <!-- Shopping Cart Section -->
+            <div class="col-md-8" style="margin-top: 65px;">
+                {% if cart %}
+
+                <div class="card p-4">
+                    <h4 class="fw-bold">Shopping Cart</h4>
+                    <!-- <p class="text-muted">3 Items</p> -->
+                    <hr>
+                    {% for i in cart %}
+
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="{{i.details.product.img.url}}" class="me-3" width="60" alt="Shirt">
+                        <div class="flex-grow-1">
+                            <p class="mb-1 fw-bold">{{i.details.product.name}}</p>
+                            <p class="text-muted small">{{i.details.product.category.category}}</p>
+                        </div>
+        
                         <p>
                             <a href="qty_sub/{{i.id}}" class="btn btn-outline-secondary">-</a>
                             Qty: {{i.quantity}}
                             <a href="qty_add/{{i.id}}" class="btn btn-outline-secondary">+</a>
                         </p>
+                        <p><del class="text-danger">₹{{i.details.price}}</del> 
+                            <strong class="text-success">₹{{i.details.off_price}}</strong>
+                        </p>
+
                     </div>
+                    {% endfor %}
+                    
+    
+            
+        
+            {% else %}
+            <!-- Empty Cart Message -->
+            <div class="col-12 text-center mt-5">
+                <h1>Your cart is empty. Add some items to your cart!</h1>
+            </div>
+            {% endif %}
+            </div>
+                    <a href="../" class="text-decoration-none text-muted">&larr; Back to shop</a>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-    
-        {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+            <div class="row my-4">
+                <div class="col-md-6">
+                    <h3>Total Amount: ₹{{total}}</h3>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a class="btn btn-primary" href="buycart">CHECKOUT CART</a>
+                </div>
             </div>
-        {% endfor %}
-        {% endif %}
-    
-        <div class="row my-4">
-            <div class="col-md-6">
-                <h3>Total Amount: ₹{{total}}</h3>
-            </div>
-            <div class="col-md-6 text-end">
-                <a class="btn btn-primary" href="buycart">CHECKOUT CART</a>
-            </div>
+            
         </div>
-    
-        {% else %}
-        <!-- Empty Cart Message -->
-        <div class="col-12 text-center mt-5">
-            <h1>Your cart is empty. Add some items to your cart!</h1>
-            <a href="../user_home" class="btn btn-primary mt-3">Go to Home</a>
-        </div>
-        {% endif %}
     </div>
-    
-    <!-- Toast Messages -->
+
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             {% if messages %}
@@ -128,6 +131,15 @@
             {% endif %}
         </div>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
     
     <footer class="text-center py-3 bg-light mt-5">
         <p>&copy; 2025 Your Company. All Rights Reserved.</p>
