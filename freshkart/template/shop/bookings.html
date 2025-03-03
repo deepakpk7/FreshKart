@@ -45,35 +45,47 @@
           </div>
         </div>
     </nav> 
-    <div class="container">
-        {%  for i in bookings %}
-        <h1>Order Placed</h1>
-        <div class="order-details">
-            <h2>Product Details</h2>
-            <div class="product">
-                <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">{{i.details.product.name}}</h3>
-                    <p class="product-qty">Weight:<span>{{i.details.weight}}</span></p>
-                    <p class="product-qty">Quantity:<span>{{i.quantity}}</span></p>
-                    <p class="product-price">Price: <span>{{i.tot_price}}</span> </p>
-                    <p class="product-price">Date: <span>{{i.date}}</span> </p>
-
-                </div>
-            </div>
-        </div>
-        <div class="customer-info">
-            <h2>Customer Information</h2>
-            <p><strong>Name:</strong>{{i.address.name}}</p>
-            <p><strong>Phone:</strong>{{i.address.phone}}</p>
-            <p><strong>Address:</strong>{{i.address.address}}</p>
-            <p><strong>street:</strong>{{i.address.street}} </p>
-            <p><strong>City:</strong>{{i.address.city}} </p>
-            <p><strong>State:</strong>{{i.address.state}}</p>
-            <p><strong>PIN:</strong> {{i.address.pincode}}</p>
-        </div>
-    {% endfor %}
-    </div>
+    <div class="container py-5">
+      {% for i in bookings %}
+      <div class="card mb-4">
+          <div class="card-header">
+              <h1 class="h4 mb-0">Order Placed</h1>
+          </div>
+          <div class="card-body">
+              <!-- Product Details -->
+              <div class="order-details mb-4">
+                  <h2 class="h5">Product Details</h2>
+                  <div class="row">
+                      <div class="col-md-4">
+                          <img src="{{i.details.product.img.url}}" alt="Product Image" class="img-fluid rounded">
+                      </div>
+                      <div class="col-md-8">
+                          <h3 class="h6">{{i.details.product.name}}</h3>
+                          <p><strong>Weight:</strong> <span>{{i.details.weight}}</span></p>
+                          <p><strong>Quantity:</strong> <span>{{i.quantity}}</span></p>
+                          <p><strong>Price:</strong> <span>{{i.tot_price}}</span></p>
+                          <p><strong>Date:</strong> <span>{{i.date}}</span></p>
+                      </div>
+                  </div>
+              </div>
+  
+              <!-- Customer Information -->
+              <div class="customer-info">
+                  <h2 class="h5">Customer Information</h2>
+                  <ul class="list-unstyled">
+                      <li><strong>Name:</strong> {{i.address.name}}</li>
+                      <li><strong>Phone:</strong> {{i.address.phone}}</li>
+                      <li><strong>Address:</strong> {{i.address.address}}</li>
+                      <li><strong>Street:</strong> {{i.address.street}}</li>
+                      <li><strong>City:</strong> {{i.address.city}}</li>
+                      <li><strong>State:</strong> {{i.address.state}}</li>
+                      <li><strong>PIN:</strong> {{i.address.pincode}}</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
 </body>
 
 </html>

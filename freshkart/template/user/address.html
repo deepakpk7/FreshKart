@@ -20,7 +20,7 @@
               <li class="nav-item">
                 <a class="nav-link  active text-dark" href="../">Home</a>
               </li>
-              <li>
+              <!-- <li>
                 <div class="dropdown">
                     <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
                         Categories
@@ -31,7 +31,7 @@
                         {% endfor %}
                     </ul>
                 </div>
-            </li> 
+                </li>  -->
               <li class="nav-item ">
                 <a class="nav-link text-dark " href="cart">Cart</a>
               </li>
@@ -73,6 +73,8 @@
                   <h5>Username:{{ user.username }}</h5>
                   <!-- <p class="text-muted">{{ user.email }}</p> -->
                   <button id="editProfileBtn" class="btn btn-secondary mt-2">Edit Profile</button>
+                  <button id="showFormBtn" class="btn btn-secondary mt-2">Add Address</button>
+
               </div>
   
               <!-- Edit Profile Form (Initially Hidden) -->
@@ -96,9 +98,9 @@
       </div>
   </div>
 
-    <div class="container py-5">
+    <div id="addressFormContainer" class="container py-5">
         <h1 class="text-center mb-4">Add Address </h1>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="addressForm" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -144,6 +146,9 @@
             </div>
         </form>
     </div>
+
+    
+
     <div class="container py-5">
         <div class="row justify-content-center">
           {% for i in data %}
@@ -179,16 +184,30 @@
           document.getElementById("editProfileForm").classList.add("d-none"); // Hide form
           document.getElementById("editProfileBtn").classList.remove("d-none"); // Show "Edit Profile" button
       });
-      document.getElementById("toggleBookings").addEventListener("click", function() {
-          var fullBookings = document.getElementById("fullBookings");
-          if (fullBookings.style.display === "none") {
-              fullBookings.style.display = "block";
-              this.textContent = "See Less";
-          } else {
-              fullBookings.style.display = "none";
-              this.textContent = "See More";
-          }
-      });
+      
     </script>
+
+<script>
+    // Wait for the DOM to load
+    document.addEventListener("DOMContentLoaded", function() {
+        const showFormBtn = document.getElementById("showFormBtn");
+        const formContainer = document.getElementById("addressFormContainer");
+
+        // Event listener for button click
+        showFormBtn.addEventListener("click", function() {
+            // Toggle visibility of the form
+            if (formContainer.style.display === "none") {
+                formContainer.style.display = "block"; // Show form
+                showFormBtn.textContent = "Hide Address Form"; // Change button text
+            } else {
+                formContainer.style.display = "none"; // Hide form
+                showFormBtn.textContent = "Add Address"; // Change button text back
+            }
+        });
+    });
+</script>
+
+    
+    
 </body>
 </html>

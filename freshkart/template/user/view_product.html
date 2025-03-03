@@ -28,18 +28,7 @@
           <li class="nav-item">
             <a class="nav-link  active text-dark" href="../">Home</a>
           </li>
-          <li>
-            <div class="dropdown">
-                <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
-                    Categories
-                </button>
-                <ul class="dropdown-menu">
-                    {% for i in data1 %}
-                    <li><a class="dropdown-item " href="view_cat/{{ i.pk }}">{{i.category}}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </li> 
+           
           <li class="nav-item ">
             <a class="nav-link text-dark " href="cart">Cart</a>
           </li>
@@ -93,8 +82,8 @@
                   <a href="../add_to_cart/{{data2.pk}}" class="text-decoration-none">
                       <button class="add-to-cart w-100 btn btn-primary">Add to Cart</button>
                   </a>
-                  <a href="../buynow/{{data2.pk}}" class="text-decoration-none">
-                      <button class="buy-now w-100 btn btn-success">Buy Now</button>
+                  <!-- <a href="../buynow/{{data2.pk}}" class="text-decoration-none"> -->
+                      <!-- <button class="buy-now w-100 btn btn-success">Buy Now</button> -->
                   </a>
               </div>
               {% endif %}
