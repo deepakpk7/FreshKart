@@ -41,7 +41,7 @@
                 <a class="nav-link text-dark" href="../../Address">Profile</a>
               </li>
               {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="return confirmLogout(event)" href="logout">Logout</a></li>
               {% else %}
                 <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
               {% endif %}     
@@ -50,66 +50,6 @@
         </div>
     </nav> 
 
-    <!-- <nav class="navbar fixed-top  ">
-        <div class="logo"><img src="{% static 'img/logo-png.png' %}" alt="" width="300px" height="50px"></div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul class="nav-list">
-            <li><a href="../../user_home">Home</a></li>
-            <li>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-white text-dark     btt-1 dropdown-toggle" data-bs-toggle="dropdown">
-                        Categories
-                    </button>
-                    <ul class="dropdown-menu">
-                        {% for i in cat %}
-                        <li><a class="dropdown-item " href="../../view_cat/{{i.pk }}">{{i.category}}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </li> -->
-            <!-- <li><a href="../address">Add Address</a></li> -->
-            <!-- <li><a href="../../cart">Cart</a></li>
-            <li><a href="../../user_book">Order Placed</a></li>
-            <li><a href="../../logout">Logout</a></li>
-
-
-        </ul>
-    </nav> -->
-    <!-- <div class="order-summary">
-        <h2>Order Summary</h2>
-
-        <div>
-            <label for="product">Shipping Address</label>
-            <a href="../address"><button class="btn btn-outline-dark">Add Address</button></a>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <select id="address" name="address" required>
-                    {% for j in data %}
-                    <option value="{{j}}">
-                        {{j.name}},{{j.address}},{{j.street}},{{j.city}},{{j.state}},{{j.pincode}},{{j.phone}}</option>
-                    {% endfor %}
-                </select>
-                <a href="../../../address">Add new address + </a>
-        </div>
-        <div class="product">
-            <img src="{{prod.product.img.url}}" alt="Product Name" class="product-img">
-            <div class="product-details">
-                <h3 class="product-name">{{prod.product.name}}</h3>
-                <p class="product-description">{{prod.product.descri}}</p>
-                <p class="product-category">Category: {{prod.product.category.category}}</p>
-                <p class="product-category">{{prod.weight}}ml</p>
-                <p class="product-price">Price: <span class="original-price">₹{{prod.price}}</span></p>
-                <p class="offer-price">Offer Price: <span>₹{{prod.off_price}}</span></p>
-                <button type="submit" class="payment-button">Proceed </button>
-            </div>
-            </form>
-        </div>
-
-    </div> -->
     <div class="container mt-5">
         <div class="row justify-content-center" style="margin-top: 120px;">
             <div class="col-lg-8 col-md-10 col-sm-12">
@@ -161,6 +101,18 @@
             </div>
         </div>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script>
+    function confirmLogout(event) {
+        event.preventDefault(); // Prevent the default logout action
+    
+        let confirmAction = confirm("Are you sure you want to logout?");
+        
+        if (confirmAction) {
+            window.location.href = event.target.href; // Proceed with logout
+        }
+    }
+  </script>
 </body>
 
 </html>

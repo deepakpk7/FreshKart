@@ -11,6 +11,8 @@ import razorpay
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -229,7 +231,8 @@ def view_pro(req,pid):
         return render(req,'user/view_product.html',{'data':data,'data1':data1,'data2':data2,'cat':cat})
     # else:
     #      return redirect(gro_login)
-    
+
+@login_required(login_url='/login')  # Redirects to login if not logged in
 def add_to_cart(req,id):
     if 'user' in req.session:
         details = Details.objects.get(pk=id)
@@ -244,8 +247,8 @@ def add_to_cart(req,id):
             data = Cart.objects.create(details=details,user=user,quantity=1,price=price)
             data.save()
         return redirect(view_cart)
-    else:
-         return redirect(gro_login)
+    # else:
+    #     return redirect(gro_login)
 
 def view_cart(req):
     if 'user' in req.session:

@@ -50,7 +50,7 @@
             <a class="nav-link text-dark" href="../Address">Profile</a>
           </li>
           {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="return confirmLogout(event)" href="logout">Logout</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
           {% endif %}     
@@ -175,6 +175,18 @@
     <p>&copy; 2025 Your Company. All Rights Reserved.</p>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <script>
+    function confirmLogout(event) {
+        event.preventDefault(); // Prevent the default logout action
+    
+        let confirmAction = confirm("Are you sure you want to logout?");
+        
+        if (confirmAction) {
+            window.location.href = event.target.href; // Proceed with logout
+        }
+    }
+  </script>
+    
   
 </body>
 

@@ -17,86 +17,107 @@
 </head>
 
 <body>
-  <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
+  {% load static %}
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-sm bg-white fixed-top shadow">
     <div class="container-fluid">
-      <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link  active text-dark" href="../">Home</a>
-          </li>
-           
-          <li class="nav-item ">
-            <a class="nav-link text-dark " href="cart">Cart</a>
-          </li>
-          <li class="nav-item  ">
-            <a class="nav-link text-dark" href="user_book">Order Bookings</a>
-          </li>
-          <li class="nav-item  ">
-            <a class="nav-link text-dark" href="../Address">Profile</a>
-          </li>
-          {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
-          {% else %}
-            <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-          {% endif %}     
-        </ul>
-      </div>
+        <a href="shop_home">
+            <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active text-dark" href="../">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="user_book">Order Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="../Address">Profile</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link text-dark" onclick="return confirmLogout(event)" href="logout">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link text-dark" href="login">Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-  </nav> 
-    <!-- Product Display -->
-    <div class="container mt-5" style="border-top-width: 44px;border-top-style: solid;">
-      <div class="product-container row bg-white p-4 rounded shadow-lg">
-          <div class="col-md-5 text-center">
-              <img src="{{data.img.url}}" alt="Product Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-7">
-              <h2 class="product-name">{{data.name}}</h2>
-              <p class="product-description">{{data.descri}}</p>
-              <p class="product-category">Category: {{data.category.category}}</p>
-  
-              <!-- {% if data2.stock > 0 %}
-              <h4 class="stock-info text-success">ONLY {{data2.stock}} LEFT!</h4>
-              {% else %}
-              <h4 class="text-danger">OUT OF STOCK</h4>
-              {% endif %} -->
-  
-              <h5>Available Sizes:</h5>
-              <div class="d-flex flex-wrap">
-                  {% for j in data1 %}
-                  <label class="m-2">
-                      <input type="radio" onchange="get_correct_price('{{j.pk}}')" name="select" {% if data2.pk == j.pk %} checked {%endif %}>
-                      <span class="badge bg-secondary p-2">{{j.weight}}</span>
-                  </label>
-                  {% endfor %}
-              </div>
-  
-              <p class="product-price mt-3">Price: <span class="original-price">₹{{data2.price}}</span></p>
-              <p class="offer-price">Offer Price: <span>₹{{data2.off_price}}</span></p>
-  
-              {% if data2.stock > 0 %}
-              <div class="button-container d-flex gap-3">
-                  <a href="../add_to_cart/{{data2.pk}}" class="text-decoration-none">
-                      <button class="add-to-cart w-100 btn btn-primary">Add to Cart</button>
-                  </a>
-                  <!-- <a href="../buynow/{{data2.pk}}" class="text-decoration-none"> -->
-                      <!-- <button class="buy-now w-100 btn btn-success">Buy Now</button> -->
-                  </a>
-              </div>
-              {% endif %}
-          </div>
-      </div>
+</nav>
+
+<!-- Product Display -->
+<div class="container mt-5 pt-5" style="border-top-width: 44px; ">
+    <div class="product-container row bg-white p-4 rounded shadow-lg">
+        <!-- Product Image -->
+        <div class="col-md-5 text-center">
+            <img src="{{ data.img.url }}" alt="Product Image" class="img-fluid rounded">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-7">
+            <h2 class="product-name">{{ data.name }}</h2>
+            <p class="product-description">{{ data.descri }}</p>
+            <p class="product-category">Category: {{ data.category.category }}</p>
+
+            <!-- Stock Info -->
+            <!-- {% if data2.stock > 0 %}
+                <h4 class="stock-info text-success">ONLY {{ data2.stock }} LEFT!</h4>
+            {% else %}
+                <h4 class="text-danger">OUT OF STOCK</h4>
+            {% endif %} -->
+
+            <!-- Available Sizes -->
+            <h5>Available Sizes:</h5>
+            <div class="d-flex flex-wrap">
+                {% for j in data1 %}
+                    <label class="m-2">
+                        <input type="radio" onchange="get_correct_price('{{ j.pk }}')" name="select"
+                            {% if data2.pk == j.pk %} checked {% endif %}>
+                        <span class="badge bg-secondary p-2">{{ j.weight }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+
+            <!-- Pricing -->
+            <p class="product-price mt-3">Price: <span class="original-price">₹{{ data2.price }}</span></p>
+            <p class="offer-price">Offer Price: <span>₹{{ data2.off_price }}</span></p>
+
+            {% if data2.stock > 0 %}
+            <!-- Buttons: Add to Cart & Buy Now -->
+            <div class="button-container d-flex gap-3">
+                <a href="../add_to_cart/{{ data2.pk }}" class="text-decoration-none">
+                    <button class="add-to-cart w-100 btn btn-primary">Add to Cart</button>
+                </a>
+                
+            </div>
+            {% endif %}
+        </div>
     </div>
-  
+</div>
+
     <script>
       function get_correct_price(dis) {
         window.location.href = window.location.pathname + `?dis=${dis}`
       }
     </script>
-  
+    <script>
+      function confirmLogout(event) {
+          event.preventDefault(); // Prevent the default logout action
+      
+          let confirmAction = confirm("Are you sure you want to logout?");
+          
+          if (confirmAction) {
+              window.location.href = event.target.href; // Proceed with logout
+          }
+      }
+    </script>
   </body>
   
 </html>

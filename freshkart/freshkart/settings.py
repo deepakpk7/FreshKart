@@ -137,3 +137,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'electronicera0124@gmail.com'
 EMAIL_HOST_PASSWORD = 'ljdd xiko mtyp bocp'
+
+LOGIN_REDIRECT_URL = '/'
