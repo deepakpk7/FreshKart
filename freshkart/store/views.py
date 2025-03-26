@@ -254,7 +254,10 @@ def view_cart(req):
     if 'user' in req.session:
         user = User.objects.get(username=req.session['user'])
         data = Cart.objects.filter(user=user)
-        total=0
+        handlingfee=7.50
+
+        total=0+handlingfee
+        delivery=0
         for i in data:
             total+=i.price*i.quantity
         cat=Category.objects.all()
