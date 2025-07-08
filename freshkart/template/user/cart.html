@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -10,23 +11,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Cart Page</title>
-    
+
 </head>
+
 <body>
     <nav class="  navbar navbar-expand-sm bg-white navbar-white fixed-top ">
         <div class="container-fluid">
-          <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 80px; width: auto;"></a><br>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link  active text-dark" href="../">Home</a>
-              </li>
-              <!-- <li>
+            <a href="shop_home"><img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid"
+                    style="height: 80px; width: auto;"></a><br>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end " id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link  active text-dark" href="../">Home</a>
+                    </li>
+                    <!-- <li>
                 <div class="dropdown">
                     <button type="button" class="btn btn-white text-dark btt-1 dropdown-toggle" data-bs-toggle="dropdown">
                         Categories
@@ -38,25 +43,25 @@
                     </ul>
                 </div>
                 </li>  -->
-              <li class="nav-item ">
-                <a class="nav-link text-dark " href="../cart">Cart</a>
-              </li>
-              <li class="nav-item  ">
-                <a class="nav-link text-dark" href="../user_book">Order Bookings</a>
-              </li>
-              <li class="nav-item  ">
-                <a class="nav-link text-dark" href="../Address">Profile</a>
-              </li>
-              {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
-              {% else %}
-                <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-              {% endif %}     
-            </ul>
-          </div>
+                    <li class="nav-item ">
+                        <a class="nav-link text-dark " href="../cart">Cart</a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a class="nav-link text-dark" href="../user_book">Order Bookings</a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a class="nav-link text-dark" href="../Address">Profile</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </nav>  
-    
+    </nav>
+
     <div class="container my-5">
         <div class="row">
             <!-- Shopping Cart Section -->
@@ -86,7 +91,7 @@
                 </div>
                 <a href="../" class="text-decoration-none text-muted">&larr; Back to shop</a>
             </div>
-    
+
             <!-- Order Summary Section (Right Side) -->
             <div class="col-md-4 mt-5">
                 <div class="card p-4">
@@ -108,17 +113,19 @@
                     <a class="btn btn-primary w-100 mt-3" href="buycart">CHECKOUT CART</a>
                 </div>
             </div>
-    
+
             {% else %}
             <!-- Empty Cart Message -->
-            <div class="col-12 text-center mt-5">
+            <div class="container col-12 text-center mt-5">
                 <h1>Your cart is empty. Add some items to your cart!</h1>
+                <a href="../" class="text-decoration-none text-muted">&larr; Back to shop</a>
+
             </div>
-            
+
             {% endif %}
         </div>
     </div>
-    
+
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             {% if messages %}
@@ -137,24 +144,24 @@
         </div>
     </div>
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endfor %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
     {% endif %}
-    
-    
+
     <footer class="bg-dark text-light py-4 mt-5">
         <div class="container">
             <div class="row">
                 <!-- About Section -->
                 <div class="col-md-4 text-center text-md-start">
                     <h5>About Us</h5>
-                    <p>We provide the freshest and 100% organic foods right to your doorstep. Quality and customer satisfaction are our priorities.</p>
+                    <p>We provide the freshest and 100% organic foods right to your doorstep. Quality and customer
+                        satisfaction are our priorities.</p>
                 </div>
-      
+
                 <!-- Quick Links -->
                 <div class="col-md-4 text-center">
                     <h5>Quick Links</h5>
@@ -166,7 +173,7 @@
                         <li><a href="login" class="text-light text-decoration-none">Login</a></li>
                     </ul>
                 </div>
-      
+
                 <!-- Contact & Social Media -->
                 <div class="col-md-4 text-center text-md-end">
                     <h5>Contact Us</h5>
@@ -187,6 +194,7 @@
             </div>
         </div>
     </footer>
-      
+
 </body>
+
 </html>

@@ -398,11 +398,12 @@ def carbuy(req):
         cart=Cart.objects.filter(user=user)
         price=0
         total=0
+        handlefee = 7.50
         for i in cart:
             price+=(i.details.price)*i.quantity
             price=price
             total+=(i.details.off_price)*i.quantity
-            total=total
+            total=total+handlefee
         data=Address.objects.filter(user=user)
         if data:
             return redirect("orderSummary2",price=price,total=total)
@@ -580,7 +581,7 @@ def book2(req):
         cart=Cart.objects.filter(user=user)
         price=0
         for i in cart:
-            price=i.price*i.quantity
+            price=i.price*i.quantity+7.50
             data=Buy.objects.create(user=i.user,details=i.details,quantity=i.quantity,tot_price=price,address=Address.objects.get(pk=req.session['address']))
             data.save()
         cart.delete()

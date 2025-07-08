@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -14,6 +15,7 @@
         body {
             background-color: #f8f9fa;
         }
+
         .product-card {
             background: #fff;
             border-radius: 10px;
@@ -22,9 +24,11 @@
             text-align: center;
             transition: transform 0.3s ease-in-out;
         }
+
         .product-card:hover {
             transform: translateY(-5px);
         }
+
         .product-img {
             width: 100%;
             height: auto;
@@ -32,6 +36,7 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
+
         .btn-danger:hover {
             background-color: #dc3545;
             opacity: 0.9;
@@ -41,82 +46,116 @@
 
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-    <div class="container">
-        <a href="shop_home">
-            <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 60px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link text-dark" href="../">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="cart">Cart</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="user_book">Order Bookings</a></li>
-                <li class="nav-item"><a class="nav-link text-dark" href="../Address">Profile</a></li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link text-danger" onclick="return confirmLogout(event)" href="logout">Logout</a></li>
-                {% else %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a href="shop_home">
+                <img src="{% static 'images/logo.jpg' %}" alt="Logo" class="img-fluid" style="height: 60px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link text-dark" href="../">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="cart">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="user_book">Order Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="../Address">Profile</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link text-danger" onclick="return confirmLogout(event)"
+                            href="logout">Logout</a></li>
+                    {% else %}
                     <li class="nav-item"><a class="nav-link text-dark" href="login">Login</a></li>
-                {% endif %}
-            </ul>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orders Section -->
+    <div class="container order-container mt-5 pt-5">
+        <h1 class="text-center text-primary fw-bold mb-4">Your Orders</h1>
+        <div class="row justify-content-center">
+            {% for i in bookings %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="product-card">
+                    <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-img img-fluid">
+                    <h5 class="fw-semibold text-dark">{{ i.details.product.name }}</h5>
+                    <p class="product-info mb-1">Quantity: <strong>{{ i.quantity }}</strong></p>
+                    <p class="product-info mb-1">Price: <strong>₹{{ i.tot_price }}</strong></p>
+                    <p class="text-muted mb-3">Date: {{ i.date }}</p>
+                    <div class="address-box">
+                        <h6 class="fw-bold mb-1">Delivery Address</h6>
+                        <p class="small text-muted mb-0"><i class="fas fa-user"></i> {{ i.address.name }}</p>
+                        <p class="small text-muted mb-0"><i class="fas fa-phone"></i> {{ i.address.phone }}</p>
+                        <p class="small text-muted"><i class="fas fa-map-marker-alt"></i> {{ i.address.street }}</p>
+                    </div>
+                    <a href="deleteBookings/{{i.pk}}" class="btn btn-danger mt-3 px-4"><i
+                            class="fas fa-times-circle"></i> Cancel</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="../shop_home" class="btn btn-primary px-4"><i class="fas fa-arrow-left"></i> Back to Shop</a>
         </div>
     </div>
-</nav>
 
-<!-- Orders Section -->
-<div class="container order-container mt-5 pt-5">
-  <h1 class="text-center text-primary fw-bold mb-4">Your Orders</h1>
-  <div class="row justify-content-center">
-      {% for i in bookings %}
-      <div class="col-md-6 col-lg-4 mb-4">
-          <div class="product-card">
-              <img src="{{i.details.product.img.url}}" alt="Product Image" class="product-img img-fluid">
-              <h5 class="fw-semibold text-dark">{{ i.details.product.name }}</h5>
-              <p class="product-info mb-1">Quantity: <strong>{{ i.quantity }}</strong></p>
-              <p class="product-info mb-1">Price: <strong>₹{{ i.tot_price }}</strong></p>
-              <p class="text-muted mb-3">Date: {{ i.date }}</p>
-              <div class="address-box">
-                  <h6 class="fw-bold mb-1">Delivery Address</h6>
-                  <p class="small text-muted mb-0"><i class="fas fa-user"></i> {{ i.address.name }}</p>
-                  <p class="small text-muted mb-0"><i class="fas fa-phone"></i> {{ i.address.phone }}</p>
-                  <p class="small text-muted"><i class="fas fa-map-marker-alt"></i> {{ i.address.street }}</p>
-              </div>
-              <a href="deleteBookings/{{i.pk}}" class="btn btn-danger mt-3 px-4"><i class="fas fa-times-circle"></i> Cancel</a>
-          </div>
-      </div>
-      {% endfor %}
-  </div>
-  <div class="text-center mt-4">
-      <a href="../shop_home" class="btn btn-primary px-4"><i class="fas fa-arrow-left"></i> Back to Shop</a>
-  </div>
-</div>
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- About Section -->
+                <div class="col-md-4 text-center text-md-start">
+                    <h5>About Us</h5>
+                    <p>We provide the freshest and 100% organic foods right to your doorstep. Quality and customer
+                        satisfaction are our priorities.</p>
+                </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-light py-4 mt-5">
-    <div class="container text-center">
-        <p>&copy; 2025 Organic Foods. All Rights Reserved.</p>
-        <p>Follow us on:</p>
-        <div>
-            <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-light me-3 text-decoration-none"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="text-light text-decoration-none"><i class="fab fa-twitter"></i></a>
+                <!-- Quick Links -->
+                <div class="col-md-4 text-center">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../" class="text-light text-decoration-none">Home</a></li>
+                        <li><a href="cart" class="text-light text-decoration-none">Cart</a></li>
+                        <li><a href="user_book" class="text-light text-decoration-none">Order Bookings</a></li>
+                        <li><a href="../Address" class="text-light text-decoration-none">Profile</a></li>
+                        <li><a href="login" class="text-light text-decoration-none">Login</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Social Media -->
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Contact Us</h5>
+                    <p>Email: support@organicfoods.com</p>
+                    <p>Phone: +91 9876543210</p>
+                    <p>Location: Kozhikode, Kerala</p>
+                    <div>
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="text-center mt-3">
+                <p>&copy; 2025 Organic Foods. All Rights Reserved.</p>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Scripts -->
-<script>
-    function confirmLogout(event) {
-        event.preventDefault();
-        let confirmAction = confirm("Are you sure you want to logout?");
-        if (confirmAction) {
-            window.location.href = event.target.href;
+    <!-- Scripts -->
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault();
+            let confirmAction = confirm("Are you sure you want to logout?");
+            if (confirmAction) {
+                window.location.href = event.target.href;
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
